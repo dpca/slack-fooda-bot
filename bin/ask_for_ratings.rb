@@ -3,7 +3,7 @@
 require_relative '../lib/fooda-bot'
 
 slack = Slacker.new(Slack::Web::Client.new)
-storage = Storage.new
+storage = Storage.new(Redis.new)
 
 event = storage.get_latest
 
