@@ -8,7 +8,7 @@ class SlackEventFormatter
 
   def format
     if reactions
-      "#{base}\n<#{reactions.permalink}|Last time> you thought #{formatted_reactions}"
+      "#{base}\n<#{reactions.permalink}|Last time> you thought: #{formatted_reactions}"
     else
       base
     end
@@ -23,6 +23,6 @@ class SlackEventFormatter
   def formatted_reactions
     reactions.reactions.map do |reaction|
       "#{reaction[:count]} :#{reaction[:name]}:"
-    end.join(', ')
+    end.join(' ')
   end
 end
