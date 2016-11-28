@@ -7,24 +7,30 @@
 # fooda-bot
 
 Slack bot that looks up current events from [Fooda](https://www.fooda.com/) and
-remembers reactions for when they come around again. Intended to run on a
-schedule using cron.
+remembers reactions for when they come around again. Lets everyone in a
+channel, such as "#lunch", know both the restaurant popup for the day and the
+reactions that were used when it last came around.
 
 ## Setup
 
 `bundle install` and set the following in `.env`:
 
-* SLACK_API_TOKEN
-* SLACK_CHANNEL
-* SLACK_USERNAME
-* SLACK_ICON_EMOJI
-* FOODA_URL
+* `SLACK_API_TOKEN` - Slack token (see below)
+* `SLACK_CHANNEL` - channel to post in
+* `SLACK_USERNAME` - bot name
+* `SLACK_ICON_EMOJI` - bot icon
+* `FOODA_URL` - fooda url for your popup space, e.g. "fooda.com/idb"
 
 Fooda-bot uses [Redis](http://redis.io/) to remember its message history and
 look up the last restaurant reactions. Ensure that redis is either running
 locally or set `REDIS_URL` in your `.env` or environment to point it to a redis
 instance. All fields that fooda-bot sets in redis are prefixed with
 "fooda-bot:".
+
+You can request a token for testing purposes from
+https://api.slack.com/docs/oauth-test-tokens but should use a bot token from
+https://my.slack.com/services/new/bot for a real deployment. Read more about
+bot users here: https://api.slack.com/bot-users.
 
 ## Run
 
