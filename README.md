@@ -6,6 +6,8 @@
 
 # fooda-bot
 
+![Lunch bot](/images/lunchbot.png)
+
 Slack bot that looks up current events from [Fooda](https://www.fooda.com/) and
 remembers reactions for when they come around again. Lets everyone in a
 channel, such as "#lunch", know both the restaurant popup for the day and the
