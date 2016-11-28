@@ -7,7 +7,8 @@
 # fooda-bot
 
 Slack bot that looks up current events from [Fooda](https://www.fooda.com/) and
-remembers reactions for when they come around again.
+remembers reactions for when they come around again. Intended to run on a
+schedule using cron.
 
 ## Setup
 
@@ -32,6 +33,10 @@ morning, and `bin/ask_for_ratings.rb` to ask for reactions in the afternoon.
 These two actions are separate to increase likelihood that users remember to
 leave an emoji rating - they don't have to go back to the morning's message
 after they've eaten lunch.
+
+To run on a schedule, use cron. For example, `0 11 * * 1-5 bin/run.rb` to run
+at 11 AM on weekdays and `0 14 * * 1-5 bin/ask_for_ratings.rb` to ask for
+ratings at 2 PM.
 
 ## Test
 
