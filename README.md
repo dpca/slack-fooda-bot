@@ -15,7 +15,7 @@ reactions that were used when it last came around.
 
 ## Setup
 
-`bundle install` and set the following in `.env`:
+Set the following in `.env`:
 
 * `SLACK_API_TOKEN` - Slack token (see below)
 * `SLACK_CHANNEL` - channel to post in
@@ -24,17 +24,25 @@ reactions that were used when it last came around.
 * `FOODA_URL` - fooda url for your popup space, e.g. "fooda.com/idb"
 
 Fooda-bot uses [Redis](http://redis.io/) to remember its message history and
-look up the last restaurant reactions. Ensure that redis is either running
-locally or set `REDIS_URL` in your `.env` or environment to point it to a redis
-instance. All fields that fooda-bot sets in redis are prefixed with
-"fooda-bot:".
+look up the last restaurant reactions. If running with docker, this is taken
+care of, otherwise ensure that redis is either running locally or set
+`REDIS_URL` in your `.env` or environment to point it to a redis instance. All
+fields that fooda-bot sets in redis are prefixed with "fooda-bot:".
 
 You can request a token for testing purposes from
 https://api.slack.com/docs/oauth-test-tokens but should use a bot token from
 https://my.slack.com/services/new/bot for a real deployment. Read more about
 bot users here: https://api.slack.com/bot-users.
 
-## Run
+## Run with Docker
+
+```
+docker-compose up
+```
+
+## Run locally
+
+`bundle install` first.
 
 Use `bin/run.rb` to look up and post about the day's fooda event in the
 morning, and `bin/ask_for_ratings.rb` to ask for reactions in the afternoon.

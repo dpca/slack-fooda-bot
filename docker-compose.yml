@@ -1,5 +1,14 @@
-redis:
-  image: redis
+version: '2'
+services:
+  redis:
+    image: redis
+    volumes:
+      - ./data:/data
 
-foodabot:
-  build: .
+  foodabot:
+    build: .
+    links:
+      - redis
+    env_file: .env
+    environment:
+      REDIS_URL: redis://redis
