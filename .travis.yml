@@ -12,7 +12,7 @@ script: bundle exec rspec spec
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-    docker build -t dpca/slack-fooda-bot .
-    docker push dpca/slack-fooda-bot
+    docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+    docker build -t dpca/slack-fooda-bot .;
+    docker push dpca/slack-fooda-bot;
     fi
