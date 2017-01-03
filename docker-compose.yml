@@ -1,0 +1,5 @@
+redis:
+  image: redis
+
+foodabot:
+  build: .
