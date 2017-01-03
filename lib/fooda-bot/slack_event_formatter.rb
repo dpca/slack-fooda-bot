@@ -8,7 +8,7 @@ class SlackEventFormatter
 
   def format
     if reactions
-      "#{base}\n<#{reactions.permalink}|Last time> you thought: #{formatted_reactions}"
+      "#{base}\n<#{reactions.permalink}|Last time> you reacted with: #{formatted_reactions}"
     else
       base
     end
