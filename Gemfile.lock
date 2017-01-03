@@ -78,12 +78,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  codeclimate-test-reporter
+  codeclimate-test-reporter (~> 1.0.0)
   dotenv
   nokogiri
   redis
   rest-client
   rspec
+  simplecov
   slack-ruby-client
 
 BUNDLED WITH
