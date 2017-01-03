@@ -8,9 +8,14 @@ services:
 rvm:
   - 2.4
 
+addons:
+  code_climate:
+    repo_token: d71e4c1efd740edfac8693d04042ae291a3692b9e2ddc032257cca41fd3c6358
+
 script: bundle exec rspec spec
 
 after_success:
+  - bundle exec codeclimate-test-reporter
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker build -t dpca/slack-fooda-bot .;
