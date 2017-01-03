@@ -9,6 +9,8 @@ services:
     build: .
     links:
       - redis
+    volumes:
+      - .:/usr/src/app
     env_file: .env
     environment:
       REDIS_URL: redis://redis
