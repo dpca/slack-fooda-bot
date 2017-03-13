@@ -1,5 +1,8 @@
 FROM ruby:2.4-alpine
 
+# Set up US eastern time zone by default
+ENV TZ=:America/New_York
+
 RUN apk add --update --no-cache build-base openssl libxml2-dev libxslt-dev
 
 # throw errors if Gemfile has been modified since Gemfile.lock
