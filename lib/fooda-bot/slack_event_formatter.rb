@@ -21,8 +21,12 @@ class SlackEventFormatter
   end
 
   def formatted_reactions
-    reactions.reactions.map do |reaction|
-      "#{reaction[:count]} :#{reaction[:name]}:"
-    end.join(' ')
+    if reactions.reactions
+      reactions.reactions.map do |reaction|
+        "#{reaction[:count]} :#{reaction[:name]}:"
+      end.join(' ')
+    else
+      'no reactions??? Bad humans!'
+    end
   end
 end
