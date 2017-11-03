@@ -26,11 +26,21 @@ class Restaurant
     @_reactions ||= @slack.reactions(@storage.lookup(name))
   end
 
+  def reactions_link
+    "<#{reactions.permalink}|jump>"
+  end
+
   def formatted_reactions
     if reactions
-      reactions.map { |reaction| "#{reaciton[:count]} :#{reaction[:name]}:" }.join(' ')
+      if reactions.reactions.any?
+        reactions.reactions.map do |reaction|
+          "#{reaction[:count]} :#{reaction[:name]}:"
+        end.join(' ') + " (#{reactions_link})"
+      else
+        "No reactions! (#{reactions_link})"
+      end
     else
-      'No reactions!'
+      'No previous event found'
     end
   end
 end
