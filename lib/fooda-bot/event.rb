@@ -14,7 +14,7 @@ class Event
   end
 
   def to_s
-    "#{date}\n#{url}\n#{events.join("\n")}"
+    "#{date}\n#{url}\n#{restaurants.join("\n")}"
   end
 
   def page
@@ -31,6 +31,10 @@ class Event
 
   def today?
     TimeHelpers.today?(date.to_time)
+  end
+
+  def tomorrow?
+    TimeHelpers.tomorrow?(date.to_time)
   end
 
   def url
