@@ -46,7 +46,7 @@ class Event
   end
 
   def save_as_latest
-    storage.set_latest(restaurants.map(&:name))
+    @storage.set_latest(restaurants.map(&:name))
   end
 
   private
