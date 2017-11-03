@@ -7,7 +7,7 @@ storage = Storage.new(Redis.new)
 
 event = Event.new(RestClient.get(ENV['FOODA_URL']), slack, storage)
 
-if event&.today?
+if event&.today? && event.restaurants.any?
   message = slack.send(event.slack_format)
   event.save_as_latest if message
 end
