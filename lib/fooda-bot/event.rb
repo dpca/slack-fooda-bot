@@ -1,20 +1,28 @@
 class Event
   attr_reader :connection
 
-  def initialize(connection)
+  def initialize(connection, slack, storage)
     @connection = connection
+    @slack = slack
+    @storage = storage
+  end
+
+  def restaurants
+    page.search('.myfooda-event__restaurant').map do |search_result|
+      Restaurant.new(search_result, @slack, @storage)
+    end
   end
 
   def to_s
-    "#{name} #{date}\n#{url}"
+    "#{date}\n#{url}\n#{events.join("\n")}"
   end
 
-  def name
-    page.search('.restaurant-banner__name').first.text.strip
+  def page
+    @_page ||= parse
   end
 
   def raw_date
-    page.search('.secondary-bar__label').first.text.strip
+    page.search('.cal__day--active').first.text.strip
   end
 
   def date
@@ -29,8 +37,12 @@ class Event
     connection.request.url
   end
 
-  def page
-    @_page ||= parse
+  def slack_format
+    "Hey there! Fooda today is:\n#{restaurants.map(&:slack_format).join("\n")}"
+  end
+
+  def save_as_latest
+    storage.set_latest(restaurants.map(&:name))
   end
 
   private

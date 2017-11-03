@@ -13,8 +13,8 @@ class Storage
     parse_latest(redis.get(encode(LATEST_KEY)))
   end
 
-  def set_latest(name)
-    redis.set(encode(LATEST_KEY), { time: Time.new, name: name }.to_json)
+  def set_latest(names)
+    redis.set(encode(LATEST_KEY), { time: Time.new, names: names }.to_json)
   end
 
   def push(name, value)
@@ -31,11 +31,11 @@ class Storage
     "fooda-bot:#{name}"
   end
 
-  LatestEvent = Struct.new(:time, :name)
+  LatestEvent = Struct.new(:time, :names)
 
   def parse_latest(latest)
     return nil unless latest
     result = JSON.parse(latest)
-    LatestEvent.new(Time.parse(result['time']), result['name'])
+    LatestEvent.new(Time.parse(result['time']), result['names'])
   end
 end

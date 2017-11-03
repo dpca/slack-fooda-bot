@@ -3,12 +3,12 @@ describe Storage do
     it 'gets the latest event info from redis' do
       time = Time.new
       redis = instance_double('Redis')
-      expect(redis).to receive(:get).with('fooda-bot:latest').and_return({ time: time, name: 'Foo' }.to_json)
+      expect(redis).to receive(:get).with('fooda-bot:latest').and_return({ time: time, names: ['Foo'] }.to_json)
       storage = Storage.new(redis)
       latest_event = storage.get_latest
       expect(latest_event).to be_a(Storage::LatestEvent)
       expect(latest_event.time.round).to eq(time.round)
-      expect(latest_event.name).to eq('Foo')
+      expect(latest_event.names).to eq(['Foo'])
     end
   end
 
@@ -17,9 +17,9 @@ describe Storage do
       time = Time.new
       allow(Time).to receive(:new).and_return(time)
       redis = instance_double('Redis')
-      expect(redis).to receive(:set).with('fooda-bot:latest', { time: time, name: 'Foo' }.to_json)
+      expect(redis).to receive(:set).with('fooda-bot:latest', { time: time, names: ['Foo'] }.to_json)
       storage = Storage.new(redis)
-      storage.set_latest('Foo')
+      storage.set_latest(['Foo'])
     end
   end
 

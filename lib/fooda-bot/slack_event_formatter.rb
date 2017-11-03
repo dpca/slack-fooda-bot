@@ -17,7 +17,7 @@ class SlackEventFormatter
   private
 
   def base
-    "Hey there! Fooda is <#{event.url}|#{event.name}> (#{event.raw_date})"
+    "Hey there! Fooda today (#{event.raw_date}) is:\n#{event.map(&:slack_link).join("\n")}"
   end
 
   def formatted_reactions
