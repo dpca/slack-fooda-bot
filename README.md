@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/dpca/slack-fooda-bot.svg?branch=master)](https://travis-ci.org/dpca/slack-fooda-bot)
 [![Code Climate](https://codeclimate.com/github/dpca/slack-fooda-bot/badges/gpa.svg)](https://codeclimate.com/github/dpca/slack-fooda-bot)
-[![Test Coverage](https://codeclimate.com/github/dpca/slack-fooda-bot/badges/coverage.svg)](https://codeclimate.com/github/dpca/slack-fooda-bot/coverage)
+[![Coverage Status](https://coveralls.io/repos/github/dpca/slack-fooda-bot/badge.svg?branch=master)](https://coveralls.io/github/dpca/slack-fooda-bot?branch=master)
 
 * * *
 
