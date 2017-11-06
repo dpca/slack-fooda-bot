@@ -32,7 +32,7 @@ class Restaurant
 
   def formatted_reactions
     if reactions
-      if reactions.reactions.any?
+      if reactions.reactions&.any?
         reactions.reactions.map do |reaction|
           "#{reaction[:count]} :#{reaction[:name]}:"
         end.join(' ') + " (#{reactions_link})"
