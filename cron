@@ -1,3 +1,3 @@
-0 11 * * 1-5 cd /usr/src/app && ruby bin/run.rb
+30 9 * * 1-5 cd /usr/src/app && ruby bin/run.rb
 0 14 * * 1-5 cd /usr/src/app && ruby bin/ask_for_ratings.rb
 0 16 * * 1-5 cd /usr/src/app && ruby bin/check_for_chicken_and_rice_guys.rb
