@@ -1,9 +1,10 @@
 class Restaurant
-  attr_reader :name, :url
+  attr_reader :name, :url, :location
 
   def initialize(unparsed_result, slack, storage)
     @name = unparsed_result.search('.myfooda-event__name').first.text.strip
     @url = unparsed_result['href']
+    @location = unparsed_result.search('.myfooda-vendor-location-name').first.text.strip
     @slack = slack
     @storage = storage
   end
@@ -13,7 +14,7 @@ class Restaurant
   end
 
   def slack_format
-    "<#{url}|#{name}>: #{formatted_reactions}"
+    "<#{url}|#{name}> @ #{location}: #{formatted_reactions}"
   end
 
   def chicken_and_rice_guys?
