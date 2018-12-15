@@ -12,14 +12,27 @@ describe Storage do
     end
   end
 
-  describe '#set_latest' do
-    it 'sets the latest event info in redis' do
+  describe '#add_event' do
+    it 'adds an event to the latest cache' do
+      redis = instance_double('Redis')
+      storage = Storage.new(redis)
+      restaurant = instance_double('Restaurant', name: 'Foo')
+      event = instance_double('Event', restaurants: [restaurant])
+      storage.add_event(event)
+      expect(storage.instance_variable_get('@latest_cache')).to eq(['Foo'])
+    end
+  end
+
+  describe '#save_latest' do
+    it 'sets the latest event info in redis from the latest cache' do
       time = Time.new
       allow(Time).to receive(:new).and_return(time)
       redis = instance_double('Redis')
       expect(redis).to receive(:set).with('fooda-bot:latest', { time: time, names: ['Foo'] }.to_json)
       storage = Storage.new(redis)
-      storage.set_latest(['Foo'])
+      storage.instance_variable_set('@latest_cache', ['Foo'])
+      storage.save_latest
+      expect(storage.instance_variable_get('@latest_cache')).to eq([])
     end
   end
 

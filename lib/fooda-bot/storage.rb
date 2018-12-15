@@ -7,14 +7,21 @@ class Storage
 
   def initialize(redis)
     @redis = redis
+    @latest_cache = []
   end
 
   def get_latest
     parse_latest(redis.get(encode(LATEST_KEY)))
   end
 
-  def set_latest(names)
-    redis.set(encode(LATEST_KEY), { time: Time.new, names: names }.to_json)
+  def add_event(event)
+    add_to_latest(event.restaurants.map(&:name))
+  end
+
+  def save_latest
+    return unless @latest_cache.any?
+    redis.set(encode(LATEST_KEY), { time: Time.new, names: @latest_cache }.to_json)
+    @latest_cache = []
   end
 
   def push(name, value)
@@ -26,6 +33,10 @@ class Storage
   end
 
   private
+
+  def add_to_latest(names)
+    @latest_cache += names
+  end
 
   def encode(name)
     "fooda-bot:#{name}"

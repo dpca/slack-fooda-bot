@@ -42,11 +42,7 @@ class Event
   end
 
   def slack_format
-    "Hey there! Fooda today is:\n#{restaurants.map(&:slack_format).join("\n")}"
-  end
-
-  def save_as_latest
-    @storage.set_latest(restaurants.map(&:name))
+    restaurants.map(&:slack_format).join("\n")
   end
 
   private
