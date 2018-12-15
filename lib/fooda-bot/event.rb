@@ -38,7 +38,7 @@ class Event
   end
 
   def url
-    connection.request.url
+    connection.url
   end
 
   def slack_format
@@ -52,6 +52,6 @@ class Event
   private
 
   def parse
-    Nokogiri::HTML(connection)
+    connection.call
   end
 end
