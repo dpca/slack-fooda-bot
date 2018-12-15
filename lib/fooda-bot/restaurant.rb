@@ -17,10 +17,6 @@ class Restaurant
     "<#{url}|#{name}> @ #{location}: #{formatted_reactions}"
   end
 
-  def chicken_and_rice_guys?
-    name.casecmp('chicken and rice guys').zero?
-  end
-
   private
 
   def reactions
