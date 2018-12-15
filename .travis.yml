@@ -8,7 +8,7 @@ services:
   - docker
 
 rvm:
-  - 2.4
+  - 2.5
 
 addons:
   code_climate:

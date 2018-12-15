@@ -1,4 +1,4 @@
-FROM ruby:2.4-alpine
+FROM ruby:2.5-alpine
 
 # Set up US eastern time zone by default
 RUN apk add --update tzdata
