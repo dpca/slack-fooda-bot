@@ -14,7 +14,6 @@ class Slacker
   end
 
   def send(message)
-    return nil unless @attachments.any?
     response = client.chat_postMessage(
       channel: ENV['SLACK_CHANNEL'],
       text: message,

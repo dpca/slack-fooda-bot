@@ -25,9 +25,16 @@ describe Slacker do
   end
 
   describe '#send' do
-    it 'returns if there are no attachments' do
+    it 'sends a message if there are no attachments' do
       slack = Slacker.new(@client)
-      expect(@client).to_not receive(:chat_postMessage)
+      expect(@client).to receive(:chat_postMessage).with(
+        channel: 'slack-test-channel',
+        text: 'hi',
+        attachments: [],
+        as_user: false,
+        username: 'slack-test-username',
+        icon_emoji: 'slack-test-icon-emoji'
+      ).and_return(FakeResponse.new(true))
       slack.send('hi')
     end
 
