@@ -1,2 +1,2 @@
-30 9 * * 1-5 cd /usr/src/app && ruby bin/run.rb
+0 9 * * 1-5 cd /usr/src/app && ruby bin/run.rb
 0 14 * * 1-5 cd /usr/src/app && ruby bin/ask_for_ratings.rb
