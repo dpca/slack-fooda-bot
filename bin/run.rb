@@ -17,6 +17,7 @@ if ENV['PEACH_HOME_LOCATION_ID']
   peach = Peach.new(reaction_formatter)
   if peach.restaurants.any?
     slack.add_attachment(peach.title, peach.slack_format)
+    storage.add_event(peach)
   end
 end
 
