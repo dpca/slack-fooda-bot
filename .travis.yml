@@ -10,14 +10,17 @@ services:
 rvm:
   - 2.5
 
-addons:
-  code_climate:
-    repo_token: d71e4c1efd740edfac8693d04042ae291a3692b9e2ddc032257cca41fd3c6358
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 script: bundle exec rspec spec
 
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 after_success:
-  - bundle exec codeclimate-test-reporter
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker build -t dpca/slack-fooda-bot .;
