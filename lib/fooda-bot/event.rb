@@ -1,15 +1,14 @@
 class Event
   attr_reader :connection
 
-  def initialize(connection, slack, storage)
+  def initialize(connection, reaction_formatter)
     @connection = connection
-    @slack = slack
-    @storage = storage
+    @reaction_formatter = reaction_formatter
   end
 
   def restaurants
     page.search('.myfooda-event__restaurant').map do |search_result|
-      Restaurant.new(search_result, @slack, @storage)
+      Restaurant.new(search_result, @reaction_formatter)
     end
   end
 
@@ -43,6 +42,10 @@ class Event
 
   def slack_format
     restaurants.map(&:slack_format).join("\n")
+  end
+
+  def title
+    'Fooda'
   end
 
   private

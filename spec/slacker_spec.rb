@@ -18,7 +18,7 @@ describe Slacker do
       expect(slack.instance_variable_get('@attachments')).to eq([
         {
           title: 'foo',
-          value: 'bar'
+          text: 'bar'
         }
       ])
     end
@@ -39,12 +39,8 @@ describe Slacker do
         text: 'hi',
         attachments: [
           {
-            fields: [
-              {
-                title: 'foo',
-                value: 'bar'
-              }
-            ]
+            title: 'foo',
+            text: 'bar'
           }
         ],
         as_user: false,

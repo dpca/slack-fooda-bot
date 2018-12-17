@@ -1,12 +1,11 @@
 class Restaurant
   attr_reader :name, :url, :location
 
-  def initialize(unparsed_result, slack, storage)
+  def initialize(unparsed_result, reaction_formatter)
     @name = unparsed_result.search('.myfooda-event__name').first.text.strip
     @url = unparsed_result['href']
     @location = unparsed_result.search('.myfooda-vendor-location-name').first.text.strip
-    @slack = slack
-    @storage = storage
+    @reaction_formatter = reaction_formatter
   end
 
   def to_s
@@ -14,30 +13,6 @@ class Restaurant
   end
 
   def slack_format
-    "<#{url}|#{name}> @ #{location}: #{formatted_reactions}"
-  end
-
-  private
-
-  def reactions
-    @_reactions ||= @slack.reactions(@storage.lookup(name))
-  end
-
-  def reactions_link
-    "<#{reactions.permalink}|jump>"
-  end
-
-  def formatted_reactions
-    if reactions
-      if reactions.reactions&.any?
-        reactions.reactions.map do |reaction|
-          "#{reaction[:count]} :#{reaction[:name]}:"
-        end.join(' ') + " (#{reactions_link})"
-      else
-        "No reactions! (#{reactions_link})"
-      end
-    else
-      'No previous event found'
-    end
+    "<#{url}|#{name}> @ #{location}: #{@reaction_formatter.reactions(name)}"
   end
 end

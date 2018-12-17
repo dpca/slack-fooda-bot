@@ -9,7 +9,7 @@ class Slacker
   def add_attachment(title, message)
     @attachments << {
       title: title,
-      value: message
+      text: message
     }
   end
 
@@ -18,7 +18,7 @@ class Slacker
     response = client.chat_postMessage(
       channel: ENV['SLACK_CHANNEL'],
       text: message,
-      attachments: formatted_attachments,
+      attachments: @attachments,
       as_user: false,
       username: ENV['SLACK_USERNAME'],
       icon_emoji: ENV['SLACK_ICON_EMOJI'],
@@ -37,16 +37,5 @@ class Slacker
   rescue Slack::Web::Api::Error
     # message not found
     []
-  end
-
-  private
-
-  def formatted_attachments
-    return nil unless @attachments.any?
-    [
-      {
-        fields: @attachments
-      }
-    ]
   end
 end
