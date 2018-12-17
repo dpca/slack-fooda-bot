@@ -35,12 +35,6 @@ class Peach
     ENV['PEACH_HOME_LOCATION_ID']
   end
 
-  def peach_referral_url
-    base_url = 'https://www.peachd.com/'
-    return "#{base_url}refer/#{peach_referral_code}/" if peach_referral_code
-    base_url
-  end
-
   def peach_referral_code
     ENV['PEACH_REFERRAL_CODE']
   end
@@ -50,7 +44,8 @@ class Peach
   end
 
   def sign_up_link
-    return '' unless peach_referral_url
+    return '' unless peach_referral_code
+    peach_referral_url = "https://www.peachd.com/refer/#{peach_referral_code}/"
     "\n<#{peach_referral_url}|Use this link to get your first lunch for $5>"
   end
 end
