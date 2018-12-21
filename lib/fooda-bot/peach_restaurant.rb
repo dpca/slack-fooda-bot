@@ -7,7 +7,7 @@ class PeachRestaurant
   end
 
   def name
-    @restaurant[:name]
+    @restaurant[:display_name]
   end
 
   def to_s
