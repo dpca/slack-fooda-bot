@@ -9,7 +9,7 @@ class ReactionFormatter
     slack_reactions = fetch_reactions(name)
     if slack_reactions
       if slack_reactions.reactions&.any?
-        reactions.reactions.map do |reaction|
+        slack_reactions.reactions.map do |reaction|
           "#{reaction[:count]} :#{reaction[:name]}:"
         end.join(' ') + " (#{reactions_link(slack_reactions)})"
       else
