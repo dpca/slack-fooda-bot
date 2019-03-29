@@ -6,6 +6,8 @@ ENV TZ=America/New_York
 
 RUN apk add --update --no-cache build-base openssl libxml2-dev libxslt-dev
 
+RUN gem install bundler
+
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 RUN bundle config build.nokogiri --use-system-libraries
