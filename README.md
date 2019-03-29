@@ -13,6 +13,8 @@ remembers reactions for when they come around again. Lets everyone in a
 channel, such as "#lunch", know both the restaurant popup for the day and the
 reactions that were used when it last came around.
 
+Also supports [Peach](https://www.peachd.com/).
+
 ## Setup
 
 Set the following in `.env`:
@@ -21,7 +23,12 @@ Set the following in `.env`:
 * `SLACK_CHANNEL` - channel to post in
 * `SLACK_USERNAME` - bot name
 * `SLACK_ICON_EMOJI` - bot icon
-* `FOODA_URL` - fooda url for your popup space, e.g. "fooda.com/idb"
+* `FOODA_URL` - fooda url for your popup space, e.g. "fooda.com/idb". For
+  multiple fooda locations, provide a comma-separated list like
+  "fooda.com/company1, fooda.com/company2"
+* `PEACH_HOME_LOCATION_ID` - Peach API location ID, can be found by looking at
+  network requests to `/api/locations/LOCATION_ID` when loading the peach site
+* `PEACH_REFERRAL_CODE` - Peach referral code for rewards
 
 Fooda-bot uses [Redis](http://redis.io/) to remember its message history and
 look up the last restaurant reactions. If running with docker, this is taken

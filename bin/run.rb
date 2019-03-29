@@ -6,11 +6,13 @@ slack = Slacker.new(Slack::Web::Client.new)
 storage = Storage.new(Redis.new)
 reaction_formatter = ReactionFormatter.new(slack, storage)
 
-event = Event.new(Connection.new(ENV['FOODA_URL']), reaction_formatter)
+ENV['FOODA_URL'].split(',').map(&:strip).each do |url|
+  event = Event.new(Connection.new(url), reaction_formatter)
 
-if event&.today? && event.restaurants.any?
-  slack.add_attachment(event.title, event.slack_format)
-  storage.add_event(event)
+  if event&.today? && event.restaurants.any?
+    slack.add_attachment(event.title, event.slack_format)
+    storage.add_event(event)
+  end
 end
 
 if ENV['PEACH_HOME_LOCATION_ID']
