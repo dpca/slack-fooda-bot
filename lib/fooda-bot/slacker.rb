@@ -35,6 +35,6 @@ class Slacker
     response.ok ? response.message : nil
   rescue Slack::Web::Api::Error
     # message not found
-    []
+    nil
   end
 end

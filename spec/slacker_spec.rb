@@ -78,7 +78,7 @@ describe Slacker do
     it 'returns nothing if the message was not found' do
       slack = Slacker.new(@client)
       expect(@client).to receive(:reactions_get).and_raise(Slack::Web::Api::Error, 'not found')
-      expect(slack.reactions('123')).to eq([])
+      expect(slack.reactions('123')).to be_nil
     end
   end
 end
