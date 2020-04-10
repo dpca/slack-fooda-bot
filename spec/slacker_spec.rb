@@ -25,17 +25,18 @@ describe Slacker do
   end
 
   describe '#send' do
-    it 'sends a message if there are no attachments' do
+    it 'sends a sad message if there are no attachments' do
       slack = Slacker.new(@client)
       expect(@client).to receive(:chat_postMessage).with(
         channel: 'slack-test-channel',
-        text: 'hi',
+        text: "Oh no! I didn't find any lunch options :sadparrot:",
         attachments: [],
         as_user: false,
         username: 'slack-test-username',
         icon_emoji: 'slack-test-icon-emoji'
-      ).and_return(FakeResponse.new(true))
-      slack.send('hi')
+      ).and_return(FakeResponse.new(true, 'sent'))
+      response = slack.send('hi')
+      expect(response).to be_nil
     end
 
     it 'sends a message if there are attachments' do
@@ -53,8 +54,10 @@ describe Slacker do
         as_user: false,
         username: 'slack-test-username',
         icon_emoji: 'slack-test-icon-emoji'
-      ).and_return(FakeResponse.new(true))
-      slack.send('hi')
+      ).and_return(FakeResponse.new(true, 'sent'))
+      response = slack.send('hi')
+      expect(response).to be_a(FakeResponse)
+      expect(response.message).to eq('sent')
       expect(slack.instance_variable_get('@attachments')).to eq([])
     end
   end
