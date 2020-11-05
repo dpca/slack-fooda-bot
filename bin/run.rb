@@ -23,5 +23,5 @@ if ENV['PEACH_HOME_LOCATION_ID']
   end
 end
 
-message = slack.send('Hey there! Here are your lunch options for today.')
+message = slack.send_with_attachments('Hey there! Here are your lunch options for today.')
 storage.save_latest if message

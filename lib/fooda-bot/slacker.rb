@@ -3,25 +3,29 @@ class Slacker
 
   def initialize(client)
     @client = client
-    @attachments = []
+    @_attachments = []
   end
 
   def add_attachment(title, message)
-    @attachments << {
+    @_attachments << {
       title: title,
       text: message
     }
   end
 
-  def send(message)
-    response = if @attachments.any?
-                 post_message(message)
+  def send_with_attachments(message)
+    response = if @_attachments.any?
+                 post_message(message, @_attachments)
                else
                  post_message("Oh no! I didn't find any lunch options :sadparrot:")
                  nil
                end
-    @attachments = []
+    @_attachments = []
     response
+  end
+
+  def send(message)
+    post_message(message)
   end
 
   def reactions(timestamp)
@@ -38,11 +42,11 @@ class Slacker
 
   private
 
-  def post_message(message)
+  def post_message(message, attachments = [])
     response = client.chat_postMessage(
       channel: ENV['SLACK_CHANNEL'],
       text: message,
-      attachments: @attachments,
+      attachments: attachments,
       as_user: false,
       username: ENV['SLACK_USERNAME'],
       icon_emoji: ENV['SLACK_ICON_EMOJI'],

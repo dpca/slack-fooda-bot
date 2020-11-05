@@ -15,7 +15,7 @@ describe Slacker do
     it 'adds an attachment to the cache of attachments' do
       slack = Slacker.new(@client)
       slack.add_attachment('foo', 'bar')
-      expect(slack.instance_variable_get('@attachments')).to eq([
+      expect(slack.instance_variable_get('@_attachments')).to eq([
         {
           title: 'foo',
           text: 'bar'
@@ -25,6 +25,45 @@ describe Slacker do
   end
 
   describe '#send' do
+    it 'sends a message' do
+      slack = Slacker.new(@client)
+      expect(@client).to receive(:chat_postMessage).with(
+        channel: 'slack-test-channel',
+        text: 'hi',
+        attachments: [],
+        as_user: false,
+        username: 'slack-test-username',
+        icon_emoji: 'slack-test-icon-emoji'
+      ).and_return(FakeResponse.new(true, 'sent'))
+      response = slack.send('hi')
+      expect(response).to be_a(FakeResponse)
+      expect(response.message).to eq('sent')
+    end
+
+    it 'sends a message and does not send attachments' do
+      slack = Slacker.new(@client)
+      slack.add_attachment('foo', 'bar')
+      expect(@client).to receive(:chat_postMessage).with(
+        channel: 'slack-test-channel',
+        text: 'hi',
+        attachments: [],
+        as_user: false,
+        username: 'slack-test-username',
+        icon_emoji: 'slack-test-icon-emoji'
+      ).and_return(FakeResponse.new(true, 'sent'))
+      response = slack.send('hi')
+      expect(response).to be_a(FakeResponse)
+      expect(response.message).to eq('sent')
+      expect(slack.instance_variable_get('@_attachments')).to eq([
+        {
+          title: 'foo',
+          text: 'bar'
+        }
+      ])
+    end
+  end
+
+  describe '#send_with_attachments' do
     it 'sends a sad message if there are no attachments' do
       slack = Slacker.new(@client)
       expect(@client).to receive(:chat_postMessage).with(
@@ -35,7 +74,7 @@ describe Slacker do
         username: 'slack-test-username',
         icon_emoji: 'slack-test-icon-emoji'
       ).and_return(FakeResponse.new(true, 'sent'))
-      response = slack.send('hi')
+      response = slack.send_with_attachments('hi')
       expect(response).to be_nil
     end
 
@@ -55,10 +94,10 @@ describe Slacker do
         username: 'slack-test-username',
         icon_emoji: 'slack-test-icon-emoji'
       ).and_return(FakeResponse.new(true, 'sent'))
-      response = slack.send('hi')
+      response = slack.send_with_attachments('hi')
       expect(response).to be_a(FakeResponse)
       expect(response.message).to eq('sent')
-      expect(slack.instance_variable_get('@attachments')).to eq([])
+      expect(slack.instance_variable_get('@_attachments')).to eq([])
     end
   end
 
